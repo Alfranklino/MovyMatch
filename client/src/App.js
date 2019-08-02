@@ -1,10 +1,13 @@
 import React from "react";
+import axios from "axios";
 import { without } from "lodash";
 import { findIndex } from "lodash";
 import { uniq } from "lodash";
 import { uniqBy } from "lodash";
 import { forEach } from "lodash";
 import { intersection } from "lodash";
+// =====================Components=================
+import UserForm from "./components/UserForm";
 
 class User {
   constructor(id, name) {
@@ -28,7 +31,22 @@ class MovieFav {
   }
 }
 
-function App() {
+function App(props) {
+  const getUser = e => {
+    e.preventDefault();
+    const movieID = e.target.elements.movieID.value;
+    const userID = e.target.elements.userID.value;
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/${movieID}?api_key=dc39e5e298cbc1511c2c0048a6fb2bf0&language=en-US&page=1
+        `
+      )
+      .then(res => {
+        const title = res.data.original_title;
+        console.log(res);
+        console.log("Title of this movie:", title);
+      });
+  };
   console.log("...");
 
   // Fake Users
@@ -190,8 +208,11 @@ function App() {
     )
   );
   return (
-    <div>
-      <h1>Tests for matches ...now...</h1>
+    <div className='App'>
+      <header className='App-header'>
+        <h1 className='App-title'>HTTP Calls in React</h1>
+        <UserForm getUser={getUser} />
+      </header>
     </div>
   );
 }
