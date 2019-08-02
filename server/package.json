@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dblocal:up": "yarn node-pg-migrate up --create-schema"
+    "dblocal:drop": "psql -U postgres -d postgres -c \"DROP SCHEMA IF EXISTS \\\"movymatch\\\" CASCADE\"",
+    "dblocal:up": "yarn node-pg-migrate up --create-schema",
+    "dblocal:reset": "yarn dblocal:drop && yarn dblocal:up",
+    "dblocal:seed": "node seeds/index.js",
+    "dblocal:ras": "yarn dblocal:reset && yarn dblocal:seed",
+    "start": "node index.js",
+    "start:dev": "nodemon index.js"
   },
   "dependencies": {
     "apollo-server-express": "^2.6.7",
@@ -16,7 +22,8 @@
     "jsonwebtoken": "^8.5.1",
     "node-pg-migrate": "^3.21.1",
     "nodemon": "^1.19.1",
-    "pg": "^7.11.0"
+    "pg": "^7.11.0",
+    "squel": "^5.13.0"
   },
   "license": "MIT"
 }
