@@ -3,16 +3,22 @@ const { gql } = require("apollo-server-express");
 module.exports = gql`
   #   Query, Mutation, Subscription
   type Query {
-    getUserProfile: User!
-    getViewerMovies(viewerInfo: String!): [Movie]
+    getViewerProfile: User!
+    getViewerMovies: [Movie]!
+    getUsersWithSameMovie(movieInfo: String!): [User]!
+    getAllMovies: [Movie]!
+    getAllUsers: [User]!
+    test: String
   }
 
   type Mutation {
     signup(signupInfo: SignupInput!): User!
     login(loginInfo: LoginInput!): User!
     logout(logoutInfo: LogoutInput!): User!
-    logoutAllUsers: [Users]!
+    logoutAllUsers: [User]!
     updateProfile(updateProfileInfo: UpdateProfileInput!): User!
+    postMovie(postMovieInfo: PostMovieInput!): Movie!
+    postWatchedMovie(postWatchedMovieInfo: PostWatchedMovieInput!): WatchedMovie!
   }
 
   #   Main Customs Types
@@ -36,9 +42,9 @@ module.exports = gql`
     imdbid: String!
   }
 
-  type MovieFavourite {
+  type WatchedMovie {
     id: ID!
-    user_id: String!
+    user_id: Int!
     movie_id: String!
     date_created: String
   }
@@ -48,7 +54,7 @@ module.exports = gql`
   # User------------------------
   input SignupInput {
     fullname: String!
-    pasword: String!
+    password: String!
     email: String!
     date_of_birth: String
     phone_number: String
@@ -79,8 +85,8 @@ module.exports = gql`
   }
 
   # movieFav-------------------
-  input PostMovieFavouriteInput {
-    user_id: String!
+  input PostWatchedMovieInput {
+    user_id: Int!
     movie_id: String!
   }
 `;

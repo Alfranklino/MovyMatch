@@ -3,7 +3,7 @@ exports.up = pgm => {
         CREATE TABLE "movymatch"."users" (
             "id" SERIAL PRIMARY KEY NOT NULL,
             "password" VARCHAR(255) NOT NULL,
-            "email" VARCHAR(255) NOT NULL,
+            "email" VARCHAR(255) NOT NULL UNIQUE,
             "date_created" DATE NOT NULL DEFAULT CURRENT_DATE,
             "date_of_birth" DATE,
             "fullname" VARCHAR(128),
@@ -16,15 +16,15 @@ exports.up = pgm => {
     pgm.sql(`
         CREATE TABLE "movymatch"."movies" (
             "id" SERIAL PRIMARY KEY NOT NULL,
-            "tmdbid" VARCHAR(255) NOT NULL,
-            "imdbid" VARCHAR(255) NOT NULL
+            "tmdbid" VARCHAR(255) NOT NULL UNIQUE,
+            "imdbid" VARCHAR(255) NOT NULL UNIQUE
         );
     `),
     pgm.sql(`
-        CREATE TABLE "movymatch"."movieFavourites" (
+        CREATE TABLE "movymatch"."watchedmovies" (
             "id" SERIAL PRIMARY KEY NOT NULL,
-            "user_id" VARCHAR(255) NOT NULL,
-            "movie_id" VARCHAR(255) NOT NULL,
+            "user_id" INT NOT NULL,
+            "movie_tmdbid" VARCHAR(255) NOT NULL,
             "date_created" DATE NOT NULL DEFAULT CURRENT_DATE
         );
     `);
