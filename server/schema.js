@@ -13,11 +13,11 @@ module.exports = gql`
 
   type Mutation {
     signup(signupInfo: SignupInput!): User!
-    login(loginInfo: LoginInput!): User!
-    logout(logoutInfo: LogoutInput!): User!
+    loginByEmail(loginInfo: LoginInput!): User!
+    logout: User!
     logoutAllUsers: [User]!
     updateProfile(updateProfileInfo: UpdateProfileInput!): User!
-    postMovie(postMovieInfo: PostMovieInput!): Movie!
+    saveMovie(saveMovieInfo: SaveMovieInput!): Movie!
     postWatchedMovie(postWatchedMovieInfo: PostWatchedMovieInput!): WatchedMovie!
   }
 
@@ -45,7 +45,7 @@ module.exports = gql`
   type WatchedMovie {
     id: ID!
     user_id: Int!
-    movie_id: String!
+    movie_tmdbid: String!
     date_created: String
   }
 
@@ -79,14 +79,14 @@ module.exports = gql`
   }
 
   # movies---------------------
-  input PostMovieInput {
+  input SaveMovieInput {
     tmdbid: String!
     imdbid: String!
   }
 
   # movieFav-------------------
   input PostWatchedMovieInput {
-    user_id: Int!
-    movie_id: String!
+    # user_id: Int!
+    movie_tmdbid: String!
   }
 `;
