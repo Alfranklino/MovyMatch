@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../../App.css";
 import { Link } from "react-router-dom";
+import { ViewerContext } from "../context/ViewerContext";
 
 function Home() {
+  const [viewer, setViewer] = useContext(ViewerContext);
   return (
     <div className='main-container'>
       <h1 className='page-title'>MovyMatch</h1>
@@ -17,15 +19,23 @@ function Home() {
       </p>
 
       <div className='buttons-group'>
-        <Link className='btn signup' to='/signup'>
-          Signup
-        </Link>
-        <Link className='btn login' to='/login'>
-          Login
-        </Link>
-        <Link className='btn login' to='/watchedmovies'>
-          My Movies
-        </Link>
+        {!viewer && (
+          <Link className='btn signup' to='/signup'>
+            Signup
+          </Link>
+        )}
+
+        {!viewer && (
+          <Link className='btn login' to='/login'>
+            Login
+          </Link>
+        )}
+        {viewer && (
+          <Link className='btn login' to='/watchedmovies'>
+            My Movies
+          </Link>
+        )}
+
         <Link className='btn login' to='/movies'>
           Go to the Movies
         </Link>

@@ -169,3 +169,25 @@ nav {
   width: 60%;
   align-self: end;
 }
+
+.form-signup-container {
+  /* display: grid; */
+  width: 40%;
+  /* justify-content: center; */
+}
+
+.form-signup {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  border: 1px solid rgb(15, 122, 175);
+  padding: 25px;
+}
+.signup-form-child {
+  width: 80%;
+  font-size: 1.3em;
+}
+.btn.signup-form-child {
+  width: 30%;
+  margin-top: 10px;
+}
