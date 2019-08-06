@@ -8,6 +8,8 @@ import { uniq } from "lodash";
 import { uniqBy } from "lodash";
 import { forEach } from "lodash";
 import { intersection } from "lodash";
+// =====================Context, Providers====================
+import { MovieProvider } from "./components/context/MovieContext";
 // =====================Routing====================
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // =====================Components=================
@@ -27,14 +29,16 @@ function App(props) {
       <div className='App'>
         <Nav />
         <Switch>
-          <Route path='/' exact component={Home} />
-          <Route path='/login' exact component={Login} />
-          <Route path='/logout' exact component={Logout} />
-          <Route path='/signup' exact component={Signup} />
-          <Route path='/movies' exact component={Movies} />
-          <Route path='/watchedmovies' exact component={MyWatchedMovies} />
-          <Route path='/myprofile' exact component={MyProfile} />
-          <Route path='/mymatches' exact component={MyMatches} />
+          <MovieProvider>
+            <Route path='/' exact component={Home} />
+            <Route path='/login' exact component={Login} />
+            <Route path='/logout' exact component={Logout} />
+            <Route path='/signup' exact component={Signup} />
+            <Route path='/movies' exact component={Movies} />
+            <Route path='/watchedmovies' exact component={MyWatchedMovies} />
+            <Route path='/myprofile' exact component={MyProfile} />
+            <Route path='/mymatches' exact component={MyMatches} />
+          </MovieProvider>
         </Switch>
       </div>
     </Router>

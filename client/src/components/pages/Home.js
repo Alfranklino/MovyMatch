@@ -23,8 +23,11 @@ function Home() {
         <Link className='btn login' to='/login'>
           Login
         </Link>
-        <Link className='btn login' to='/movies'>
+        <Link className='btn login' to='/watchedmovies'>
           My Movies
+        </Link>
+        <Link className='btn login' to='/movies'>
+          Go to the Movies
         </Link>
       </div>
     </div>

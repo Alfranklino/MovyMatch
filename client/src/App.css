@@ -2,6 +2,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
     "Open Sans", "Helvetica Neue", sans-serif;
   text-align: center;
+  color: rgb(68, 68, 68);
 }
 
 /* Start Nav */
@@ -100,5 +101,64 @@ nav {
   background-color: rgb(15, 122, 175);
   color: rgb(252, 249, 249);
 }
-
 /* End Home */
+
+/* Movies */
+.search-movies {
+  /* border: 1px solid black; */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 10vh;
+  width: 40%;
+  font-size: 1.3em;
+}
+.formSearch {
+  width: 65%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.inputText {
+  font-size: 1.4em;
+  outline: none;
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgb(15, 122, 175);
+  margin-right: 15px;
+}
+.inputText:focus {
+  box-shadow: 0 0px 5px rgb(15, 122, 175);
+  padding: 5px 0px 5px 5px;
+  /* margin: 5px 1px 1px 0px; */
+  border: 1px solid rgb(15, 122, 175);
+}
+.search {
+  font-size: 1.1em;
+  padding: 0.5em;
+  width: 50px;
+}
+.movies-container {
+  /* Some display */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+.aMovieBlock {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-items: center;
+  justify-items: center;
+  /* width: 50%; */
+}
+
+.movie-poster {
+  width: 60%;
+  height: auto;
+  /* justify-self: center; */
+}
+.movie-title {
+  font-size: 1.2em;
+  border-bottom: 1px solid rgb(180, 179, 179);
+  border-top: 1px solid rgb(180, 179, 179);
+  width: 60%;
+}
