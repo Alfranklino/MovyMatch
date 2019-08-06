@@ -18,7 +18,7 @@ module.exports = gql`
     logoutAllUsers: [User]!
     updateProfile(updateProfileInfo: UpdateProfileInput!): User!
     saveMovie(saveMovieInfo: SaveMovieInput!): Movie!
-    postWatchedMovie(postWatchedMovieInfo: PostWatchedMovieInput!): WatchedMovie!
+    postWatchedMovie(postWatchedMovieInfo: PostWatchedMovieInput!): [WatchedMovie]!
   }
 
   #   Main Customs Types
@@ -81,12 +81,11 @@ module.exports = gql`
   # movies---------------------
   input SaveMovieInput {
     tmdbid: String!
-    imdbid: String!
+    imdbid: String
   }
 
   # movieFav-------------------
   input PostWatchedMovieInput {
-    # user_id: Int!
-    movie_tmdbid: String!
+    movie_tmdbid: [String]!
   }
 `;
