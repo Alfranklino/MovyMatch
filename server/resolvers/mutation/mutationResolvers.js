@@ -121,18 +121,31 @@ module.exports = {
       { postgres, authUtil, app, req },
       info
     ) {
+      console.log("...");
+
       try {
         const user_id = authUtil.authenticate(app, req);
+
+        const movie_list = postWatchedMovieInfo.movie_tmdbid;
+        let moviesQueryArray = [];
+        let baseQuery = "INSERT INTO movymatch.watchedmovies (user_id, movie_tmdbid) VALUES ";
+
+        movie_list.map(movie => {
+          moviesQueryArray.push(`(${user_id}, ${movie})`);
+        });
+        moviesQueryString = moviesQueryArray.join(",");
+        baseQuery += `${moviesQueryString} RETURNING *`;
+        console.log(user_id);
+        console.log("Our Query: ", baseQuery);
+
         const query = {
-          text:
-            "INSERT INTO movymatch.watchedmovies(user_id, movie_tmdbid) VALUES ($1, $2) RETURNING *",
-          values: [user_id, postWatchedMovieInfo.movie_tmdbid]
+          text: baseQuery
         };
         console.log(query.text);
         console.log("User id:", user_id, "movie_id:", postWatchedMovieInfo.movie_tmdbid);
 
         const result = await postgres.query(query);
-        return result.rows[0];
+        return result.rows;
       } catch (error) {
         console.log("Error detail:", error.detail);
       }
