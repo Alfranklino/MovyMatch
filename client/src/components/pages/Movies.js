@@ -74,7 +74,7 @@ function Movies() {
           {movies.map(movie => (
             <Movie
               title={movie.title}
-              img_src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              img_src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
               key={movie.id}
             />
           ))}

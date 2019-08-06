@@ -86,7 +86,7 @@ nav {
 }
 
 .buttons-group {
-  height: 6vh;
+  /* height: 6vh; */
   display: flex;
 }
 
@@ -95,7 +95,7 @@ nav {
   color: rgb(15, 122, 175);
 }
 .btn:active {
-  font-size: 1.3em;
+  font-size: 1.35em;
 }
 .login:hover {
   background-color: rgb(15, 122, 175);
@@ -130,7 +130,6 @@ nav {
 .inputText:focus {
   box-shadow: 0 0px 5px rgb(15, 122, 175);
   padding: 5px 0px 5px 5px;
-  /* margin: 5px 1px 1px 0px; */
   border: 1px solid rgb(15, 122, 175);
 }
 .search {
@@ -138,27 +137,35 @@ nav {
   padding: 0.5em;
   width: 50px;
 }
-.movies-container {
-  /* Some display */
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-}
-.aMovieBlock {
+.movies-results {
+  width: 85%;
   display: grid;
   grid-template-rows: 1fr auto;
+}
+.movies-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 20px;
+  justify-content: center;
+}
+.aMovieBlock {
+  justify-self: center;
+  display: grid;
+  grid-template-rows: auto 1fr;
   align-items: center;
   justify-items: center;
-  /* width: 50%; */
+  width: 300px;
+  box-shadow: 0 0px 5px rgb(68, 68, 68);
+  overflow: hidden;
 }
 
 .movie-poster {
-  width: 60%;
-  height: auto;
-  /* justify-self: center; */
+  object-fit: fill;
 }
 .movie-title {
   font-size: 1.2em;
   border-bottom: 1px solid rgb(180, 179, 179);
   border-top: 1px solid rgb(180, 179, 179);
   width: 60%;
+  align-self: end;
 }
