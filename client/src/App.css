@@ -142,6 +142,14 @@ nav {
   display: grid;
   grid-template-rows: 1fr auto;
 }
+
+.movies-form {
+  display: grid;
+  grid-template-rows: auto auto;
+  justify-content: center;
+  align-items: center;
+}
+
 .movies-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -170,6 +178,39 @@ nav {
   width: 60%;
   align-self: end;
 }
+
+.searchInfos {
+  font-size: 1.4em;
+  margin-bottom: 50px;
+}
+
+.emphasis {
+  font-weight: bold;
+  color: rgb(15, 122, 175);
+}
+
+.pagination {
+  font-weight: bold;
+  color: rgb(15, 122, 175);
+  font-size: 1.4em;
+  margin-bottom: 50px;
+  border-top: 1px solid rgb(15, 122, 175);
+  border-bottom: 1px solid rgb(15, 122, 175);
+}
+
+.page {
+  font-size: 1.1em;
+  padding: 0.5em;
+  width: 50px;
+  border: none;
+  margin-right: 2px;
+  font-weight: bold;
+}
+.page:active {
+  font-size: 1em;
+}
+/* ================END MOVIES================ */
+/* ================SIGNUP================ */
 
 .form-signup-container {
   /* display: grid; */
@@ -203,35 +244,4 @@ nav {
   align-items: center;
   font-size: 1.4em;
   margin-top: 80px;
-}
-
-.searchInfos {
-  font-size: 1.4em;
-  margin-bottom: 50px;
-}
-
-.emphasis {
-  font-weight: bold;
-  color: rgb(15, 122, 175);
-}
-
-.pagination {
-  font-weight: bold;
-  color: rgb(15, 122, 175);
-  font-size: 1.4em;
-  margin-bottom: 50px;
-  border-top: 1px solid rgb(15, 122, 175);
-  border-bottom: 1px solid rgb(15, 122, 175);
-}
-
-.page {
-  font-size: 1.1em;
-  padding: 0.5em;
-  width: 50px;
-  border: none;
-  margin-right: 2px;
-  font-weight: bold;
-}
-.page:active {
-  font-size: 1em;
 }

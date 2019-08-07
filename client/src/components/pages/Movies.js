@@ -1,13 +1,13 @@
-import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
-import { Formik } from 'formik';
+import React, { useState, useContext, useEffect } from "react";
+import axios from "axios";
+import { Formik } from "formik";
 
-import '../../App.css';
-import { FaSearch } from 'react-icons/fa';
+import "../../App.css";
+import { FaSearch } from "react-icons/fa";
 // =====================Context====================
-import { MovieContext } from '../context/MovieContext';
+import { MovieContext } from "../context/MovieContext";
 // =====================Components====================
-import Movie from '../utils/Movie';
+import Movie from "../utils/Movie";
 
 // function useMovies(res) {
 //   const [movies, setMovies] = useContext(MovieContext);
@@ -32,7 +32,7 @@ import Movie from '../utils/Movie';
 // }
 
 function Movies() {
-  const [searchedTerm, setSearchedTerm] = useState('Lion');
+  const [searchedTerm, setSearchedTerm] = useState("Lion");
   const [searchResults, setSearchResults] = useState({});
   const [movies, setMovies] = useContext(MovieContext);
   // const [movies, setMovies] = useState();
@@ -45,9 +45,9 @@ function Movies() {
     let pages = [];
     for (let i = 1; i <= pTotalPages; i++) {
       pages.push(
-        <button className="btn login page" id={i} onClick={getMoviesByPage}>
+        <button className='btn login page' id={i} onClick={getMoviesByPage}>
           {i}
-        </button>,
+        </button>
       );
     }
 
@@ -56,12 +56,12 @@ function Movies() {
 
   const getMoviesByPage = e => {
     e.preventDefault();
-    console.log('Here is eeee-id:', e.target.id);
+    console.log("Here is eeee-id:", e.target.id);
     axios
       .get(
         `https://api.themoviedb.org/3/search/movie?api_key=3bebb7ebadbbf8eb6778131702de6c18&language=en-US&query=${searchedTerm}&page=${
           e.target.id
-        }&include_adult=false`,
+        }&include_adult=false`
       )
       .then(res => {
         console.log(res);
@@ -75,7 +75,7 @@ function Movies() {
 
     axios
       .get(
-        `https://api.themoviedb.org/3/search/movie?api_key=3bebb7ebadbbf8eb6778131702de6c18&language=en-US&query=${searchedTerm}&page=1&include_adult=false`,
+        `https://api.themoviedb.org/3/search/movie?api_key=3bebb7ebadbbf8eb6778131702de6c18&language=en-US&query=${searchedTerm}&page=1&include_adult=false`
       )
       .then(res => {
         console.log(res);
@@ -84,38 +84,34 @@ function Movies() {
       });
   };
   return (
-    <div className="main-container">
-      <h1 className="page-title">Movies</h1>
-      <section className="search-movies">
+    <div className='main-container'>
+      <h1 className='page-title'>Movies</h1>
+      <section className='search-movies'>
         <p>Looking for a movie?</p>
-        <form onSubmit={getMovies} className="formSearch">
+        <form onSubmit={getMovies} className='formSearch'>
           <input
-            type="text"
-            name="searchedTerm"
+            type='text'
+            name='searchedTerm'
             value={searchedTerm}
             onChange={handleSearchedTerm}
-            className="inputText"
+            className='inputText'
           />
-          <button type="submit" className="btn search">
+          <button type='submit' className='btn search'>
             <FaSearch />
           </button>
         </form>
       </section>
 
-      <section className="movies-results">
+      <section className='movies-results'>
         {searchResults.total_results && (
-          <p className="searchInfos">
-            Your research returned{' '}
-            <span className="emphasis">{searchResults.total_results}</span>{' '}
-            movies, in{' '}
-            <span className="emphasis">{searchResults.total_pages}</span> pages.
+          <p className='searchInfos'>
+            Your research returned <span className='emphasis'>{searchResults.total_results}</span>{" "}
+            movies, in <span className='emphasis'>{searchResults.total_pages}</span> pages.
           </p>
         )}
 
         {searchResults.total_results && (
-          <section className="pagination">
-            {showPages(searchResults.total_pages)}
-          </section>
+          <section className='pagination'>{showPages(searchResults.total_pages)}</section>
         )}
 
         <Formik
@@ -123,25 +119,27 @@ function Movies() {
           onSubmit={values => alert(JSON.stringify(values, null, 2))}
         >
           {formik => (
-            <form className="movies-container">
-              {movies.map((movie, i) => (
-                <Movie
-                  title={movie.title}
-                  img_src={`https://image.tmdb.org/t/p/w300${
-                    movie.poster_path
-                  }`}
-                  movieID={movie.id}
-                  key={i}
-                />
-              ))}
-              <button onClick={formik.submitForm}>submit</button>
+            <form className='movies-form'>
+              <section className='movies-container'>
+                {movies.map((movie, i) => (
+                  <Movie
+                    title={movie.title}
+                    img_src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                    movieID={movie.id}
+                    key={i}
+                  />
+                ))}
+              </section>
+
+              <button className='btn signup' onClick={formik.submitForm}>
+                I've seen these Movies
+              </button>
             </form>
           )}
         </Formik>
+
         {searchResults.total_results && (
-          <section className="pagination">
-            {showPages(searchResults.total_pages)}
-          </section>
+          <section className='pagination'>{showPages(searchResults.total_pages)}</section>
         )}
       </section>
     </div>
