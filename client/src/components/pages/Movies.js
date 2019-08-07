@@ -31,11 +31,41 @@ import Movie from "../utils/Movie";
 
 function Movies() {
   const [searchedTerm, setSearchedTerm] = useState("Lion");
+  const [searchResults, setSearchResults] = useState({});
   const [movies, setMovies] = useContext(MovieContext);
   // const [movies, setMovies] = useState();
 
   const handleSearchedTerm = e => {
     setSearchedTerm(e.target.value);
+  };
+
+  function showPages(pTotalPages) {
+    let pages = [];
+    for (let i = 1; i <= pTotalPages; i++) {
+      pages.push(
+        <button className='btn login page' id={i} onClick={getMoviesByPage}>
+          {i}
+        </button>
+      );
+    }
+
+    return pages;
+  }
+
+  const getMoviesByPage = e => {
+    e.preventDefault();
+    console.log("Here is eeee-id:", e.target.id);
+    axios
+      .get(
+        `https://api.themoviedb.org/3/search/movie?api_key=3bebb7ebadbbf8eb6778131702de6c18&language=en-US&query=${searchedTerm}&page=${
+          e.target.id
+        }&include_adult=false`
+      )
+      .then(res => {
+        console.log(res);
+        // setSearchResults(res.data);
+        setMovies(res.data.results);
+      });
   };
 
   const getMovies = e => {
@@ -47,6 +77,7 @@ function Movies() {
       )
       .then(res => {
         console.log(res);
+        setSearchResults(res.data);
         setMovies(res.data.results);
       });
   };
@@ -69,19 +100,33 @@ function Movies() {
         </form>
       </section>
       <section className='movies-results'>
-        <p>List of movies below...</p>
-        <section className='movies-container'>
-          {movies.map(movie => (
-            <Movie
-              title={movie.title}
-              img_src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-              key={movie.id}
-            />
-          ))}
-        </section>
+        {searchResults.total_results && (
+          <p className='searchInfos'>
+            Your research returned <span className='emphasis'>{searchResults.total_results}</span>{" "}
+            movies, in <span className='emphasis'>{searchResults.total_pages}</span> pages.
+          </p>
+        )}
 
-        {/* {useMovies(movies)} */}
-        {/* {console.log("Inside Component")} */}
+        {searchResults.total_results && (
+          <section className='pagination'>{showPages(searchResults.total_pages)}</section>
+        )}
+
+        <section className='movies-container'>
+          {movies.map((movie, i) => {
+            // console.log(movie.id);
+            return (
+              <Movie
+                title={movie.title}
+                img_src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                movieId={movie.id}
+                key={i}
+              />
+            );
+          })}
+        </section>
+        {searchResults.total_results && (
+          <section className='pagination'>{showPages(searchResults.total_pages)}</section>
+        )}
       </section>
     </div>
   );

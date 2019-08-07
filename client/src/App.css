@@ -147,6 +147,7 @@ nav {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
   justify-content: center;
+  margin-bottom: 50px;
 }
 .aMovieBlock {
   justify-self: center;
@@ -190,4 +191,47 @@ nav {
 .btn.signup-form-child {
   width: 30%;
   margin-top: 10px;
+}
+
+.foo {
+  height: 150px;
+  background-color: rgb(15, 122, 175);
+  color: rgb(252, 249, 249);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4em;
+  margin-top: 80px;
+}
+
+.searchInfos {
+  font-size: 1.4em;
+  margin-bottom: 50px;
+}
+
+.emphasis {
+  font-weight: bold;
+  color: rgb(15, 122, 175);
+}
+
+.pagination {
+  font-weight: bold;
+  color: rgb(15, 122, 175);
+  font-size: 1.4em;
+  margin-bottom: 50px;
+  border-top: 1px solid rgb(15, 122, 175);
+  border-bottom: 1px solid rgb(15, 122, 175);
+}
+
+.page {
+  font-size: 1.1em;
+  padding: 0.5em;
+  width: 50px;
+  border: none;
+  margin-right: 2px;
+  font-weight: bold;
+}
+.page:active {
+  font-size: 1em;
 }

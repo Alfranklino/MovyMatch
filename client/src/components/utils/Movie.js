@@ -1,6 +1,6 @@
 import React from "react";
 
-const Movie = ({ title, img_src }) => {
+const Movie = ({ img_src, title, movieId }) => {
   return (
     <article className='aMovieBlock'>
       <img className='movie-poster' src={img_src} />
