@@ -146,8 +146,13 @@ nav {
 .movies-form {
   display: grid;
   grid-template-rows: auto auto;
-  justify-content: center;
+  justify-items: center;
   align-items: center;
+}
+
+.watched-movies-btn {
+  width: 250px;
+  margin-bottom: 50px;
 }
 
 .movies-container {
@@ -196,6 +201,7 @@ nav {
   margin-bottom: 50px;
   border-top: 1px solid rgb(15, 122, 175);
   border-bottom: 1px solid rgb(15, 122, 175);
+  padding: 5px;
 }
 
 .page {

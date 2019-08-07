@@ -86,6 +86,6 @@ module.exports = gql`
 
   # movieFav-------------------
   input PostWatchedMovieInput {
-    movie_tmdbid: [String]!
+    movie_tmdbid: [Int]!
   }
 `;
