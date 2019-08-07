@@ -5,9 +5,6 @@ import { ViewerContext } from "../context/ViewerContext";
 
 function Nav() {
   const [viewer, setViewer] = useContext(ViewerContext);
-  useEffect(() => {
-    console.log("...");
-  }, []);
 
   return (
     <nav>

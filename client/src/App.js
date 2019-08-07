@@ -27,6 +27,7 @@ import Movies from "./components/pages/Movies";
 import MyWatchedMovies from "./components/pages/MyWatchedMovies";
 import MyProfile from "./components/pages/MyProfile";
 import MyMatches from "./components/pages/MyMatches";
+import Footer from "./components/utils/Footer";
 
 const history = createHistory();
 
@@ -49,6 +50,7 @@ function App(props) {
                 <Route path='/mymatches' exact component={MyMatches} />
               </MovieProvider>
             </Switch>
+            <Footer />
           </ViewerProvider>
         </div>
       </Router>
