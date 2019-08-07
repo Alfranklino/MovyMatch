@@ -1,11 +1,13 @@
-import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
-import "../../App.css";
-import { FaSearch } from "react-icons/fa";
+import React, { useState, useContext, useEffect } from 'react';
+import axios from 'axios';
+import { Formik } from 'formik';
+
+import '../../App.css';
+import { FaSearch } from 'react-icons/fa';
 // =====================Context====================
-import { MovieContext } from "../context/MovieContext";
+import { MovieContext } from '../context/MovieContext';
 // =====================Components====================
-import Movie from "../utils/Movie";
+import Movie from '../utils/Movie';
 
 // function useMovies(res) {
 //   const [movies, setMovies] = useContext(MovieContext);
@@ -30,7 +32,7 @@ import Movie from "../utils/Movie";
 // }
 
 function Movies() {
-  const [searchedTerm, setSearchedTerm] = useState("Lion");
+  const [searchedTerm, setSearchedTerm] = useState('Lion');
   const [movies, setMovies] = useContext(MovieContext);
   // const [movies, setMovies] = useState();
 
@@ -43,7 +45,7 @@ function Movies() {
 
     axios
       .get(
-        `https://api.themoviedb.org/3/search/movie?api_key=3bebb7ebadbbf8eb6778131702de6c18&language=en-US&query=${searchedTerm}&page=1&include_adult=false`
+        `https://api.themoviedb.org/3/search/movie?api_key=3bebb7ebadbbf8eb6778131702de6c18&language=en-US&query=${searchedTerm}&page=1&include_adult=false`,
       )
       .then(res => {
         console.log(res);
@@ -51,33 +53,45 @@ function Movies() {
       });
   };
   return (
-    <div className='main-container'>
-      <h1 className='page-title'>Movies</h1>
-      <section className='search-movies'>
+    <div className="main-container">
+      <h1 className="page-title">Movies</h1>
+      <section className="search-movies">
         <p>Looking for a movie?</p>
-        <form onSubmit={getMovies} className='formSearch'>
+        <form onSubmit={getMovies} className="formSearch">
           <input
-            type='text'
-            name='searchedTerm'
+            type="text"
+            name="searchedTerm"
             value={searchedTerm}
             onChange={handleSearchedTerm}
-            className='inputText'
+            className="inputText"
           />
-          <button type='submit' className='btn search'>
+          <button type="submit" className="btn search">
             <FaSearch />
           </button>
         </form>
       </section>
-      <section className='movies-results'>
+      <section className="movies-results">
         <p>List of movies below...</p>
-        <section className='movies-container'>
-          {movies.map(movie => (
-            <Movie
-              title={movie.title}
-              img_src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-              key={movie.id}
-            />
-          ))}
+        <section>
+          <Formik
+            initialValues={{ movieArray: [] }}
+            onSubmit={values => alert(JSON.stringify(values, null, 2))}
+          >
+            {formik => (
+              <form className="movies-container">
+                {movies.map(movie => (
+                  <Movie
+                    title={movie.title}
+                    img_src={`https://image.tmdb.org/t/p/w300${
+                      movie.poster_path
+                    }`}
+                    movieID={movie.id}
+                  />
+                ))}
+                <button onClick={formik.submitForm}>submit</button>
+              </form>
+            )}
+          </Formik>
         </section>
 
         {/* {useMovies(movies)} */}
