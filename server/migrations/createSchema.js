@@ -24,7 +24,7 @@ exports.up = pgm => {
         CREATE TABLE "movymatch"."watchedmovies" (
             "id" SERIAL PRIMARY KEY NOT NULL,
             "user_id" INT NOT NULL,
-            "movie_tmdbid" VARCHAR(255) NOT NULL,
+            "movie_tmdbid" INT NOT NULL,
             "date_created" DATE NOT NULL DEFAULT CURRENT_DATE
         );
     `);

@@ -8,29 +8,20 @@ import { FaSearch } from "react-icons/fa";
 import { MovieContext } from "../context/MovieContext";
 // =====================Components====================
 import Movie from "../utils/Movie";
+import * as Yup from "yup";
+import gql from "graphql-tag";
+import { Mutation } from "react-apollo";
 
-// function useMovies(res) {
-//   const [movies, setMovies] = useContext(MovieContext);
-//   setMovies(res);
-//   useEffect(() => {
-//     {
-//       console.log("Inside UseEffect");
-//       movies.map(movie => (
-//         <Movie
-//           title={movie.title}
-//           img_src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-//           key={movie.id}
-//         />
-//       ));
-//     }
-//   }, []);
-
-//   return {
-//     movies,
-//     setMovies
-//   };
-// }
-
+const POSTWATCHEDMOVIE = gql`
+  mutation postWatchedMovie($postWatchedMovieInfo: PostWatchedMovieInput!) {
+    postWatchedMovie(postWatchedMovieInfo: $postWatchedMovieInfo) {
+      id
+      user_id
+      movie_tmdbid
+    }
+  }
+`;
+// ======================COMPONENT STARTS HERE==============================
 function Movies() {
   const [searchedTerm, setSearchedTerm] = useState("Lion");
   const [searchResults, setSearchResults] = useState({});
@@ -65,7 +56,6 @@ function Movies() {
       )
       .then(res => {
         console.log(res);
-        // setSearchResults(res.data);
         setMovies(res.data.results);
       });
   };
@@ -84,65 +74,83 @@ function Movies() {
       });
   };
   return (
-    <div className='main-container'>
-      <h1 className='page-title'>Movies</h1>
-      <section className='search-movies'>
-        <p>Looking for a movie?</p>
-        <form onSubmit={getMovies} className='formSearch'>
-          <input
-            type='text'
-            name='searchedTerm'
-            value={searchedTerm}
-            onChange={handleSearchedTerm}
-            className='inputText'
-          />
-          <button type='submit' className='btn search'>
-            <FaSearch />
-          </button>
-        </form>
-      </section>
+    <Mutation mutation={POSTWATCHEDMOVIE}>
+      {(postWatchedMovie, { loading, error, data, client }) => {
+        if (loading) return "Loading...";
+        if (error) return `Error! ${error.message}`;
 
-      <section className='movies-results'>
-        {searchResults.total_results && (
-          <p className='searchInfos'>
-            Your research returned <span className='emphasis'>{searchResults.total_results}</span>{" "}
-            movies, in <span className='emphasis'>{searchResults.total_pages}</span> pages.
-          </p>
-        )}
+        return (
+          <div className='main-container'>
+            <h1 className='page-title'>Movies</h1>
+            <section className='search-movies'>
+              <p>Looking for a movie?</p>
+              <form onSubmit={getMovies} className='formSearch'>
+                <input
+                  type='text'
+                  name='searchedTerm'
+                  value={searchedTerm}
+                  onChange={handleSearchedTerm}
+                  className='inputText'
+                />
+                <button type='submit' className='btn search'>
+                  <FaSearch />
+                </button>
+              </form>
+            </section>
 
-        {searchResults.total_results && (
-          <section className='pagination'>{showPages(searchResults.total_pages)}</section>
-        )}
+            <section className='movies-results'>
+              {searchResults.total_results && (
+                <p className='searchInfos'>
+                  Your research returned{" "}
+                  <span className='emphasis'>{searchResults.total_results}</span> movies, in{" "}
+                  <span className='emphasis'>{searchResults.total_pages}</span> pages.
+                </p>
+              )}
 
-        <Formik
-          initialValues={{ movieArray: [] }}
-          onSubmit={values => alert(JSON.stringify(values, null, 2))}
-        >
-          {formik => (
-            <form className='movies-form'>
-              <section className='movies-container'>
-                {movies.map((movie, i) => (
-                  <Movie
-                    title={movie.title}
-                    img_src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-                    movieID={movie.id}
-                    key={i}
-                  />
-                ))}
-              </section>
+              {searchResults.total_results && (
+                <section className='pagination'>{showPages(searchResults.total_pages)}</section>
+              )}
 
-              <button className='btn signup' onClick={formik.submitForm}>
-                I've seen these Movies
-              </button>
-            </form>
-          )}
-        </Formik>
+              <Formik
+                initialValues={{ movie_tmdbid: [] }}
+                onSubmit={(values, { setSubmitting }) => {
+                  alert(JSON.stringify(values, null, 2));
 
-        {searchResults.total_results && (
-          <section className='pagination'>{showPages(searchResults.total_pages)}</section>
-        )}
-      </section>
-    </div>
+                  setSubmitting(false);
+                  console.log(values);
+                  postWatchedMovie({ variables: { postWatchedMovieInfo: values } });
+                }}
+              >
+                {formik => (
+                  <form className='movies-form'>
+                    <section className='movies-container'>
+                      {movies.map((movie, i) => (
+                        <Movie
+                          title={movie.title}
+                          img_src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+                          movieID={movie.id}
+                          key={i}
+                        />
+                      ))}
+                    </section>
+
+                    {searchResults.total_results && (
+                      <button className='btn signup watched-movies-btn' onClick={formik.submitForm}>
+                        I've seen these Movies
+                      </button>
+                    )}
+                  </form>
+                )}
+              </Formik>
+
+              {searchResults.total_results && (
+                <section className='pagination'>{showPages(searchResults.total_pages)}</section>
+              )}
+            </section>
+          </div>
+        );
+      }}
+    </Mutation>
   );
 }
 
