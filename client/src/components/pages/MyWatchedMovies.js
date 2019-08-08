@@ -53,6 +53,7 @@ function MyWatchedMovies() {
   };
 
   if (movies && !watchedMovies) {
+    console.log("Get the movies again");
     getMoviesByTmdbId(movies);
   }
 
@@ -61,24 +62,19 @@ function MyWatchedMovies() {
     <div className='main-container'>
       <h1 className='page-title'>My Watched Movies</h1>
       <Query query={GET_VIEWER_MOVIES}>
-        {({ loading, error, data }) => {
+        {({ loading, error, data, client }) => {
           if (loading) return "Loading...";
           if (error) return `Error! ${error.message}`;
-
+          client.resetStore(); //Resetting the cache of the browser;
           if (!movies) {
-            // No Movies in Component State,
-            // Hence, set the movie data form response of query
+            console.log("Get the movies from the db!");
             setMovies(data.getViewerMovies);
             return <p>Loading...</p>;
           } else if (!watchedMovies) {
             return <p>AJAXING FOR DETAILS</p>;
           }
 
-          // If code gets here, movies are set
-          // just print the fact that we have movies
           return null;
-
-          // console.log("Final", watchedMovies); //An array of objects: {id, user_id, movie_tmdbid, __typename}
         }}
       </Query>
       {watchedMovies && (
