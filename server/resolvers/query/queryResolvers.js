@@ -31,7 +31,8 @@ module.exports = {
       try {
         const query = {
           text:
-            "SELECT m.id, m.tmdbid, m.imdbid FROM movymatch.movies AS m  INNER JOIN movymatch.watchedmovies AS wm ON m.tmdbid = wm.movie_tmdbid WHERE wm.user_id = $1",
+            // "SELECT m.id, m.tmdbid, m.imdbid FROM movymatch.movies AS m  INNER JOIN movymatch.watchedmovies AS wm ON m.tmdbid = wm.movie_tmdbid WHERE wm.user_id = $1",
+            "SELECT wm.id, wm.user_id, wm.movie_tmdbid FROM movymatch.watchedmovies AS wm WHERE wm.user_id = $1",
           values: [userId]
         };
         result = await postgres.query(query);

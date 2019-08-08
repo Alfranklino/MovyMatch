@@ -12,6 +12,7 @@ import * as Yup from "yup";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
 
+// We should also add the new Movies into to movie Table
 const POSTWATCHEDMOVIE = gql`
   mutation postWatchedMovie($postWatchedMovieInfo: PostWatchedMovieInput!) {
     postWatchedMovie(postWatchedMovieInfo: $postWatchedMovieInfo) {

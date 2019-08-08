@@ -4,7 +4,8 @@ module.exports = gql`
   #   Query, Mutation, Subscription
   type Query {
     getViewerProfile: User!
-    getViewerMovies: [Movie]!
+    # getViewerMovies: [Movie]! #This query was used first beacause the movies were supposed to be stored movies table.
+    getViewerMovies: [WatchedMovie]!
     getUsersWithSameMovie(movieInfo: String!): [User]!
     getAllMovies: [Movie]!
     getAllUsers: [User]!
