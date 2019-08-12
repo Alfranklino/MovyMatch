@@ -29,6 +29,7 @@ import MyWatchedMovies from './components/pages/MyWatchedMovies';
 import MyProfile from './components/pages/MyProfile';
 import MyMatches from './components/pages/MyMatches';
 import Footer from './components/utils/Footer';
+import UpdateProfile from './components/pages/UpdateProfile';
 
 const history = createBrowserHistory();
 
@@ -52,6 +53,7 @@ function App(props) {
                 />
                 <Route path="/myprofile" exact component={MyProfile} />
                 <Route path="/mymatches" exact component={MyMatches} />
+                <Route path="/updateprofile" exact component={UpdateProfile} />
               </MovieProvider>
             </Switch>
             <Footer />
