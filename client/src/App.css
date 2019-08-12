@@ -251,3 +251,15 @@ nav {
   font-size: 1.4em;
   margin-top: 80px;
 }
+
+.aMatchingUser {
+  justify-self: center;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  align-items: center;
+  justify-items: center;
+  width: 300px;
+  box-shadow: 0 0px 5px rgb(68, 68, 68);
+  overflow: hidden;
+  margin-bottom: 20px;
+}

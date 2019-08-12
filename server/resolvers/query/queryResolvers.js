@@ -80,6 +80,32 @@ module.exports = {
       } catch (error) {
         console.log("Error:", error.detail);
       }
+    },
+
+    async getMatchesPercentage(parent, args, { postgres, authUtil, app, req }, info) {
+      const userId = authUtil.authenticate(app, req);
+
+      try {
+        const query = {
+          text: `SELECT u.fullname, T5.user_id, T5.same_movies, T5.percentage FROM 
+                    (SELECT T3.user_id, 
+                        COUNT(T3.movie_tmdbid) AS same_movies, 
+                        ROUND((COUNT(T3.movie_tmdbid)/(SELECT COUNT(DISTINCT(T4.movie_tmdbid)) FROM movymatch.watchedmovies AS T4 WHERE T4.user_id = $1)::numeric),2) AS percentage  
+                    FROM(SELECT wm.user_id, wm.movie_tmdbid 
+                        FROM movymatch.watchedmovies AS wm
+                        INNER JOIN (SELECT T.user_id, T.movie_tmdbid FROM movymatch.watchedmovies AS T WHERE T.user_id = $1 ) AS T2
+                        ON ((wm.movie_tmdbid = T2.movie_tmdbid) AND (wm.user_id <> T2.user_id))) AS T3
+                    GROUP BY T3.user_id) AS T5
+                INNER JOIN movymatch.users AS u
+                ON T5.user_id = u.id
+                ORDER BY T5.percentage DESC`,
+          values: [userId]
+        };
+        result = await postgres.query(query);
+        return result.rows;
+      } catch (error) {
+        console.log(error.detail);
+      }
     }
   }
 };
