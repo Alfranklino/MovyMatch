@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server-express");
+const { gql } = require('apollo-server-express');
 
 module.exports = gql`
   #   Query, Mutation, Subscription
@@ -20,7 +20,9 @@ module.exports = gql`
     logoutAllUsers: [User]!
     updateProfile(updateProfileInfo: UpdateProfileInput!): User!
     saveMovie(saveMovieInfo: SaveMovieInput!): Movie!
-    postWatchedMovie(postWatchedMovieInfo: PostWatchedMovieInput!): [WatchedMovie]!
+    postWatchedMovie(
+      postWatchedMovieInfo: PostWatchedMovieInput!
+    ): [WatchedMovie]!
   }
 
   #   Main Customs Types
@@ -81,10 +83,13 @@ module.exports = gql`
   }
 
   input UpdateProfileInput {
-    email: String!
+    email: String
     fullname: String
-    location: String
+    password: String
     date_of_birth: String
+    phone_number: String
+    avatar: String
+    location: String
   }
 
   # movies---------------------

@@ -128,6 +128,62 @@ module.exports = {
         console.log(error.detail);
       }
     },
+
+    async updateProfile(
+      parent,
+      { updateProfileInfo },
+      { postgres, authUtil, app, req },
+      info,
+    ) {
+      const userId = authUtil.authenticate(app, req);
+      console.log('The user id is', userId);
+      console.log('Profile Input:', updateProfileInfo);
+
+      const updateProfileText = input => {
+        let string = 'UPDATE movymatch.users SET ';
+
+        console.log(input);
+        if (input.email !== undefined) {
+          string = string + `email = '${input.email}', `;
+        }
+        if (input.password !== undefined) {
+          const hashedPassword = bcrypt.hashSync(input.password, salt);
+          string = string + `password = '${hashedPassword}', `;
+        }
+        if (input.fullname === undefined) {
+        } else {
+          string = string + `fullname = '${input.fullname}', `;
+        }
+        if (input.date_of_birth !== undefined) {
+          string = string + `date_of_birth = '${input.date_of_birth}', `;
+        }
+        if (input.phone_number !== undefined) {
+          string = string + `phone_number = '${input.phone_number}', `;
+        }
+        if (input.avatar !== undefined) {
+          string = string + `avatar = '${input.avatar}', `;
+        }
+        if (input.location !== undefined) {
+          string = string + `location = '${input.location}', `;
+        }
+        string = string.substring(0, string.length - 2);
+        string = string + ` WHERE id = ${userId} RETURNING *`;
+        return string;
+      };
+      console.log(updateProfileText(updateProfileInfo));
+
+      try {
+        const query = {
+          text: updateProfileText(updateProfileInfo),
+        };
+
+        const result = await postgres.query(query);
+        console.log(result);
+        return result.rows[0];
+      } catch (error) {
+        console.log(error);
+      }
+    },
     // --------------------MOVIES----------------------------
     async saveMovie(
       parent,
