@@ -9,6 +9,7 @@ module.exports = gql`
     getUsersWithSameMovie(movieInfo: String!): [User]!
     getAllMovies: [Movie]!
     getAllUsers: [User]!
+    getMatchesPercentage: [MatchingUser]!
     test: String
   }
 
@@ -50,6 +51,13 @@ module.exports = gql`
     user_id: Int!
     movie_tmdbid: String!
     date_created: String
+  }
+
+  type MatchingUser {
+    fullname: String!
+    user_id: Int!
+    same_movies: Int!
+    percentage: Float!
   }
 
   # Main Inputs
